@@ -3,7 +3,8 @@ from django.conf import settings
 
 APPS = [
     'core.accounts',
-    'core.products'
+    'core.products',
+    'core.orders'
 ]
 
 for APP in APPS:
