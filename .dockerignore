@@ -1,0 +1,16 @@
+# python virtual environment
+env/
+
+
+# Git
+.git
+.gitignore
+
+
+#Docker
+.docker
+
+
+# sqlite
+app/db.sqlite3
+app/db.sqlite3-journal

@@ -1,0 +1,2 @@
+django_debug_toolbar==3.8.1
+flake8==6.0.0
