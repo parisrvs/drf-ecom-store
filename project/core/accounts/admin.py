@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
-from django.utils.html import format_html, urlencode
-from django.db.models import Count, Value
-from django.urls import reverse
+# from django.utils.html import format_html, urlencode
+# from django.db.models import Count, Value
+# from django.urls import reverse
 from .models import User
 
 
@@ -72,7 +72,7 @@ class UserAdmin(BaseUserAdmin):
     #         order_total = 0
     #         for orderitem in order.items.all():
     #             price = orderitem.product.price * orderitem.quantity
-    #             discount = 0 if not orderitem.product.discount else orderitem.product.discount
+    #             discount = 0 if not orderitem.product.discount else orderitem.product.discount # noqa
     #             discounted_price = price - (price * (discount/100))
     #             order_total += discounted_price
 

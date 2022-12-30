@@ -93,8 +93,16 @@ class ProductAdmin(admin.ModelAdmin):
         "slug": ["title"]
     }
     list_display = [
-        "id", "title", "price", "discount", "discount_price", "unit", "availability",
-        "inventory", "delivery_time_in_days", "created_at"
+        "id",
+        "title",
+        "price",
+        "discount",
+        "discount_price",
+        "unit",
+        "availability",
+        "inventory",
+        "delivery_time_in_days",
+        "created_at"
     ]
     list_per_page = 10
     list_select_related = ["collection"]
@@ -111,12 +119,18 @@ class ProductAdmin(admin.ModelAdmin):
         if db_field.name == "variations":
             qs = kwargs.get("queryset", db_field.remote_field.model.objects)
             kwargs["queryset"] = qs.select_related("key", "value")
-        return super().formfield_for_manytomany(db_field, request=request, **kwargs)
+        return super().formfield_for_manytomany(
+            db_field,
+            request=request,
+            **kwargs
+        )
 
     def discount_price(self, product):
         if not product.discount:
             return product.price
-        return round(product.price - (product.price * (product.discount / 100)))
+        return round(
+            product.price - (product.price * (product.discount / 100))
+        )
 
 
 class RatingFilter(admin.SimpleListFilter):
