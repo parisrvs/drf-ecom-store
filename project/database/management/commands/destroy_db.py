@@ -17,14 +17,15 @@ from ._private import (
 class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any) -> Optional[str]:
-        # destroy_orders()
-        # destroy_address()
-        # destroy_reviews()
-        # destroy_users()
-        # destroy_pincodes()
-        # destroy_products()
-        # destroy_discounts()
-        # destroy_tags()
-        # destroy_variations()
-        # destroy_collection()
-        pass
+        self.stdout.write("Destroying dummy database...")
+        destroy_orders()
+        destroy_address()
+        destroy_reviews()
+        destroy_users()
+        destroy_pincodes()
+        destroy_products()
+        destroy_discounts()
+        destroy_tags()
+        destroy_variations()
+        destroy_collection()
+        self.stdout.write("Dummy database cleared!")

@@ -17,14 +17,15 @@ from ._private import (
 class Command(BaseCommand):
 
     def handle(self, *args: Any, **options: Any) -> Optional[str]:
-        # create_collections()
-        # create_variations()
-        # create_tags()
-        # create_discounts()
-        # create_products()
-        # create_pincodes()
-        # create_users()
-        # create_reviews()
-        # create_address()
-        # create_orders()
-        pass
+        self.stdout.write("Creating dummy database...")
+        create_collections()
+        create_variations()
+        create_tags()
+        create_discounts()
+        create_products()
+        create_pincodes()
+        create_users()
+        create_reviews()
+        create_address()
+        create_orders()
+        self.stdout.write("Dummy database available!")
