@@ -1,8 +1,7 @@
-from django.urls import path
-from .views import homepage
+from django.urls import path, include
 
 app_name = "core"
 
 urlpatterns = [
-    path('', homepage, name="homepage"),
+    path('', include("core.frontend.urls")),
 ]
