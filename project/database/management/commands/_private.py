@@ -16,6 +16,12 @@ from core.products.models import (
 
 from core.accounts.models import (
     User,
+    Address
+)
+
+from core.orders.models import (
+    Order,
+    OrderItem
 )
 
 import random
@@ -288,4 +294,203 @@ def create_reviews():
 
 def destroy_reviews():
     Review.objects.all().delete()
+    return
+
+
+def create_address():
+    all_pincodes = Pincode.objects.all()
+    states = {db_utils.get_tag_name(): {} for _ in range(2)}
+    cities = []
+    pincodes = []
+    country = db_utils.get_tag_name()
+    mobiles = []
+    for state in states.keys():
+        for _ in range(random.randint(10, 20)):
+            while True:
+                city = db_utils.get_tag_name()
+                if city not in cities:
+                    cities.append(city)
+                    break
+            states[state][city] = []
+
+            for _ in range(random.randint(10, 20)):
+                while True:
+                    pincode = random.choice(all_pincodes)
+                    if pincode not in pincodes:
+                        pincodes.append(pincode)
+                        break
+                states[state][city].append(pincode)
+
+    addresses = []
+    for state, cities in states.items():
+        for city, pincodes in cities.items():
+            for pincode in pincodes:
+                landline = db_utils.get_digits(
+                    10) if random.choice([True, False]) else None
+
+                address2 = db_utils.get_address2() if random.choice([
+                    True, False]) else None
+
+                while True:
+                    mobile = db_utils.get_digits(11)
+                    if mobile not in mobiles:
+                        mobiles.append(mobile)
+                        break
+
+                addresses.append({
+                    "mobile": mobile,
+                    "landline": landline,
+                    "address1": db_utils.get_address1(),
+                    "address2": address2,
+                    "landmark": db_utils.get_tag_name(),
+                    "pincode": pincode.pincode,
+                    "city": city,
+                    "state": state,
+                    "country": country
+                })
+
+    total_addresses = len(addresses)
+    counter = total_addresses // 100
+    index = 0
+
+    users = User.objects.all().exclude(is_staff=True)
+    for user in users:
+        for _ in range(random.randint(1, counter)):
+            Address.objects.create(
+                user=user,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                email=user.email,
+                mobile=addresses[index]["mobile"],
+                landline=addresses[index]["landline"],
+                address1=addresses[index]["address1"],
+                address2=addresses[index]["address2"],
+                landmark=addresses[index]["landmark"],
+                pincode=addresses[index]["pincode"],
+                city=addresses[index]["city"],
+                state=addresses[index]["state"],
+                country=addresses[index]["country"]
+            )
+            index += 1
+    return
+
+
+def destroy_address():
+    a = Address.objects.all().delete()
+    return
+
+
+def create_orders():
+    users = User.objects.all().exclude(is_staff=True)
+    all_products = Product.objects.all()
+    discount = list(Discount.objects.all())
+    discount.append(None)
+    orders = {}
+    for user in users:
+        orders[user] = []
+        for _ in range(random.randint(10, 20)):
+            products = []
+            order = {
+                "user": user,
+                "address": random.choice(user.address.all()),
+                "discount": random.choice(discount),
+                "items": []
+            }
+            for _ in range(random.randint(1, 10)):
+                expected_delivery_time = set()
+                while True:
+                    product = random.choice(all_products)
+                    if product not in products:
+                        pincode = order["address"].pincode
+                        pincode_database = Pincode.objects.filter(
+                            pincode=pincode).first()
+                        if product not in pincode_database.products_not_available.all():
+                            products.append(product)
+                            expected_delivery_time.add(
+                                product.delivery_time_in_days
+                            )
+                            expected_delivery_time.add(
+                                pincode_database.delivery_time_in_days
+                            )
+                            break
+
+                order["items"].append({
+                    "product": product,
+                    "quantity": random.randint(1, 10)
+                })
+            placed_at = datetime.now(timezone.utc) - \
+                timedelta(days=random.randint(0, 50))
+            placed_at = placed_at - timedelta(minutes=random.randint(10, 500))
+            expected_order_delivery_time = placed_at + \
+                timedelta(days=max(expected_delivery_time))
+            order["placed_at"] = placed_at
+            order["expected_delivery_time"] = expected_order_delivery_time
+            orders[user].append(order)
+
+    for user, all_orders in orders.items():
+        for order in all_orders:
+            status = "OP"
+            closed_at = None
+            if order["expected_delivery_time"] < datetime.now(timezone.utc):
+                closed_at = order["expected_delivery_time"] - \
+                    timedelta(minutes=random.randint(60, 500))
+                closed_at = closed_at.replace(tzinfo=timezone.utc)
+                status = "CL"
+            o = Order.objects.create(
+                user=user,
+                address=order["address"],
+                discount=order["discount"],
+                created_at=order["placed_at"].replace(tzinfo=timezone.utc),
+                expected_delivery_time=order["expected_delivery_time"].replace(
+                    tzinfo=timezone.utc),
+                order_status=status,
+                closed_at=closed_at
+            )
+            for item in order["items"]:
+                oi = OrderItem.objects.create(
+                    order=o,
+                    product=item["product"],
+                    quantity=item["quantity"]
+                )
+
+    all_orders = Order.objects.filter(order_status="CL")
+    orders = []
+    for _ in range(100):
+        while True:
+            order = random.choice(all_orders)
+            if order not in orders:
+                orders.append(order)
+                break
+
+        order.cancellation_request_at = (
+            order.created_at + timedelta(minutes=random.randint(100, 1000))
+        ).replace(tzinfo=timezone.utc)
+        order.cancelled_at = (
+            order.cancellation_request_at +
+            timedelta(minutes=random.randint(500, 1000))
+        ).replace(tzinfo=timezone.utc)
+        order.order_status = "CN"
+        order.closed_at = None
+        order.save()
+
+    all_orders = Order.objects.filter(order_status="OP")
+    orders = []
+    for _ in range(5):
+        while True:
+            order = random.choice(all_orders)
+            if order not in orders:
+                orders.append(order)
+                break
+
+        order.cancellation_request_at = (
+            order.created_at + timedelta(minutes=random.randint(500, 1000))
+        ).replace(tzinfo=timezone.utc)
+        order.order_status = "PC"
+        order.save()
+
+    return
+
+
+def destroy_orders():
+    Order.objects.all().delete()
     return

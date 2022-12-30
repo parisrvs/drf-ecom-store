@@ -8,7 +8,9 @@ from ._private import (
     create_products,
     create_pincodes,
     create_users,
-    create_reviews
+    create_reviews,
+    create_address,
+    create_orders
 )
 
 
@@ -23,4 +25,6 @@ class Command(BaseCommand):
         # create_pincodes()
         # create_users()
         # create_reviews()
+        # create_address()
+        # create_orders()
         pass

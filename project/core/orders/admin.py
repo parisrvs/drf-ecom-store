@@ -8,8 +8,8 @@ from . import models
 
 class OrderItemInline(admin.TabularInline):
     model = models.OrderItem
-    list_select_related = ["product"]
     autocomplete_fields = ["product"]
+    list_select_related = ["product"]
     min_num = 1
     extra = 0
 
@@ -122,7 +122,7 @@ class OrderAdmin(admin.ModelAdmin):
             )
 
     def delivery_address(self, orderitem):
-        url = reverse("admin:customers_address_change",
+        url = reverse("admin:accounts_address_change",
                       args=(orderitem.address.id,))
         return format_html(
             "<a href='{}'>{}</a>",
@@ -131,7 +131,7 @@ class OrderAdmin(admin.ModelAdmin):
         )
 
     def customer(self, orderitem):
-        url = reverse("admin:customers_user_change", args=(orderitem.user.id,))
+        url = reverse("admin:accounts_user_change", args=(orderitem.user.id,))
         return format_html(
             "<a href='{}'>{}</a>",
             url,

@@ -58,3 +58,24 @@ def get_product_info():
 def get_digits(n):
     digits = ''.join(random.choices(string.digits, k=n))
     return digits
+
+
+def get_address1():
+    number = ''.join(random.choices(string.digits, k=random.randint(1, 3)))
+    text1 = ''.join(random.choices(
+        string.ascii_lowercase, k=random.randint(5, 10)))
+    text2 = ''.join(random.choices(
+        string.ascii_lowercase, k=random.randint(7, 12)))
+
+    address = f"{number}, {text1.strip().title()}, {text2.strip().title()}"
+    return address
+
+
+def get_address2():
+    text1 = ''.join(random.choices(
+        string.ascii_lowercase, k=random.randint(5, 10)))
+    text2 = ''.join(random.choices(
+        string.ascii_lowercase, k=random.randint(7, 12)))
+
+    address = f"{text1.strip().title()}, {text2.strip().title()}"
+    return address

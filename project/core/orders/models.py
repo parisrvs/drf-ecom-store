@@ -62,7 +62,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(
         Product,
         on_delete=models.PROTECT,
-        related_name='+'
+        related_name='items'
     )
     quantity = models.FloatField()
 
