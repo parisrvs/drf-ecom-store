@@ -73,7 +73,8 @@ class UserAdmin(BaseUserAdmin):
             order_total = 0
             for orderitem in order.items.all():
                 price = orderitem.product.price * orderitem.quantity
-                discount = 0 if not orderitem.product.discount else orderitem.product.discount
+                discount = 0 if not orderitem.product.discount \
+                    else orderitem.product.discount
                 discounted_price = price - (price * (discount/100))
                 order_total += discounted_price
 

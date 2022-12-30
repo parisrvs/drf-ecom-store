@@ -34,7 +34,7 @@ class Address(models.Model):
     country = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.city}, {self.pincode}"
+        return f"{self.first_name} {self.city}, {self.pincode}"
 
     class Meta:
         ordering = ['first_name', 'last_name']

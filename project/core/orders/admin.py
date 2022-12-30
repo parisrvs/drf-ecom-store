@@ -157,7 +157,8 @@ class OrderAdmin(admin.ModelAdmin):
         total = 0
         for orderitem in order.items.all():
             price = orderitem.product.price * orderitem.quantity
-            discount = 0 if not orderitem.product.discount else orderitem.product.discount
+            discount = 0 if not orderitem.product.discount else \
+                orderitem.product.discount
             discounted_price = price - (price * (discount/100))
             total += discounted_price
         return round(total)
@@ -207,12 +208,14 @@ class OrderItemAdmin(admin.ModelAdmin):
         return round(orderitem.product.price * orderitem.quantity)
 
     def discount(self, orderitem):
-        discount = 0 if not orderitem.product.discount else orderitem.product.discount
+        discount = 0 if not orderitem.product.discount else \
+            orderitem.product.discount
         return discount
 
     def discount_price(self, orderitem):
         price = orderitem.product.price * orderitem.quantity
-        discount = 0 if not orderitem.product.discount else orderitem.product.discount
+        discount = 0 if not orderitem.product.discount else \
+            orderitem.product.discount
         discounted_price = price - (price * (discount/100))
         return round(discounted_price)
 
