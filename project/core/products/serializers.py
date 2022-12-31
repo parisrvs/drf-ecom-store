@@ -4,7 +4,8 @@ from .models import (
     Product,
     Variation,
     Image,
-    Review
+    Review,
+    Collection
 )
 
 
@@ -24,16 +25,22 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    collection = serializers.StringRelatedField()
+    collection_url = serializers.HyperlinkedRelatedField(
+        view_name="collection-detail",
+        read_only=True,
+        source="collection"
+    )
     currency = serializers.SerializerMethodField(method_name="get_currency")
     variations = VariationSerializer(many=True)
     images = ImageSerializer(many=True)
+    collection = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Product
         fields = [
             "id",
             "collection",
+            "collection_url",
             "title",
             "price",
             "discount",
@@ -97,3 +104,17 @@ class ReviewSerializer(serializers.ModelSerializer):
         instance.rating = validated_data.get("rating")
         instance.save()
         return instance
+
+
+class CollectionSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(read_only=True, many=True)
+    products_count = serializers.SerializerMethodField(
+        method_name="get_products_count"
+    )
+
+    class Meta:
+        model = Collection
+        fields = ["id", "title", "products_count", "products"]
+
+    def get_products_count(self, instance: Collection):
+        return instance.products.all().count()

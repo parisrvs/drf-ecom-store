@@ -5,8 +5,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework.response import Response
 
-from .models import Product, Review
-from .serializers import ProductSerializer, ReviewSerializer
+from .models import Product, Review, Collection
+from .serializers import ProductSerializer, ReviewSerializer, CollectionSerializer
+from .pagination import CollectionPagination
 
 from django.db.models import Value as V
 
@@ -89,3 +90,14 @@ class ReviewModelViewSet(ModelViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         return super().destroy(request, *args, **kwargs)
+
+
+class CollectionReadOnlyModelViewSet(ReadOnlyModelViewSet):
+    serializer_class = CollectionSerializer
+    queryset = Collection.objects.all().prefetch_related(
+        "products",
+        "products__variations__key",
+        "products__variations__value",
+        "products__images"
+    )
+    pagination_class = CollectionPagination
