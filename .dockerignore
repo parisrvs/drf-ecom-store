@@ -14,3 +14,7 @@ env/
 # sqlite
 app/db.sqlite3
 app/db.sqlite3-journal
+
+
+# scss files
+scss/
