@@ -28,6 +28,9 @@ products_router.register(
 
 
 urlpatterns = [
+    path('auth/', include("djoser.urls")),
+    path('auth/', include("djoser.urls.jwt")),
+
     path('', include(router.urls)),
-    path('', include(products_router.urls))
+    path('', include(products_router.urls)),
 ]

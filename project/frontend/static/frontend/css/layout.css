@@ -9,6 +9,17 @@
   border-color: #212529;
 }
 
+.btn-outline-white {
+  color: #212529;
+  background-color: #fff;
+  border-color: #212529;
+}
+.btn-outline-white:hover {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+}
+
 body {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   padding: 5px;
@@ -28,6 +39,10 @@ body {
 #navbarSupportedContent ul li ul a:hover {
   background-color: #212529;
   color: #fff;
+}
+
+.errormessage, .requirement {
+  color: #dc3545;
 }
 
 /*# sourceMappingURL=layout.css.map */

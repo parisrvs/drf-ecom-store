@@ -1,0 +1,78 @@
+<!-- verify recovery email modal -->
+<script id="loginAuthenticationDivHandlebar" type="text/x-handlebars-template">
+    <li><a class="dropdown-item" href="" onclick="displayLoginModal(); return false;">Login</a></li>
+    <li><a class="dropdown-item" href="" onclick="displayRecoverModal(); return false;">Recover</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="" onclick="displayRegisterModal(); return false;">Register</a></li>
+</script>
+
+<script id="loggedinAuthenticationDivHandlebar" type="text/x-handlebars-template">
+    {% verbatim %}
+        <a class="nav-link" href="" onclick="return false;">Login</a>
+    {% endverbatim %}
+</script>
+
+
+<script id="loginModalBodyFormHandlebar" type="text/x-handlebars-template">
+    <form id="loginForm" onsubmit="login(); return false;">
+        <div class="mb-3">
+            <label for="login_email_FormInput" class="form-label"><span class="requirement">*</span>Email Address</label>
+            <input type="email" class="form-control" id="login_email_FormInput">
+        </div>
+        <div class="mb-3">
+            <label for="login_password_FormInput" class="form-label"><span class="requirement">*</span>Password</label>
+            <input type="password" class="form-control" id="login_password_FormInput">
+        </div>
+    </form>
+    <div id="loginFormErrorMessage" class="errormessage"></div>
+</script>
+
+
+<script id="registerModalBodyFormHandlebar" type="text/x-handlebars-template">
+    <form id="registerForm" onsubmit="register(); return false;">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <label for="register_first_name_FormInput" class="form-label"><span class="requirement">*</span>First Name</label>
+                <input type="text" class="form-control disable" id="register_first_name_FormInput" aria-describedby="register_first_name_FormInputHelp">
+                <div id="register_first_name_FormInputHelp" class="form-text errormessage"></div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="register_last_name_FormInput" class="form-label"><span class="requirement">*</span>Last Name</label>
+                <input type="text" class="form-control disable" id="register_last_name_FormInput" aria-describedby="register_last_name_FormInputHelp">
+                <div id="register_last_name_FormInputHelp" class="form-text errormessage"></div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="register_email_FormInput" class="form-label"><span class="requirement">*</span>Email Address</label>
+                <input type="email" class="form-control disable" id="register_email_FormInput" aria-describedby="register_email_FormInputHelp">
+                <div id="register_email_FormInputHelp" class="form-text errormessage"></div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="register_username_FormInput" class="form-label"><span class="requirement">*</span>Username</label>
+                <input type="text" class="form-control disable" id="register_username_FormInput" aria-describedby="register_username_FormInputHelp">
+                <div id="register_username_FormInputHelp" class="form-text errormessage"></div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="register_password_FormInput" class="form-label"><span class="requirement">*</span>Password</label>
+                <input type="password" class="form-control disable" id="register_password_FormInput" aria-describedby="register_password_FormInputHelp">
+                <div id="register_password_FormInputHelp" class="form-text errormessage"></div>
+            </div>
+            <div class="col-md-6 col-12">
+                <label for="register_re_password_FormInput" class="form-label"><span class="requirement">*</span>Confirm Password</label>
+                <input type="password" class="form-control disable" id="register_re_password_FormInput" aria-describedby="register_re_password_FormInputHelp">
+                <div id="register_re_password_FormInputHelp" class="form-text errormessage"></div>
+            </div>
+        </div>
+    </form>
+    <div id="registerFormErrorMessage" class="errormessage mt-3 text-start"></div>
+</script>
+
+
+<script id="recoverModalBodyFormHandlebar" type="text/x-handlebars-template">
+    <form id="recoverForm" onsubmit="recover(); return false;">
+        <div class="mb-3">
+            <label for="recover_email_FormInput" class="form-label"><span class="requirement">*</span>Email Address</label>
+            <input type="email" class="form-control" id="recover_email_FormInput">
+        </div>
+    </form>
+</script>
+

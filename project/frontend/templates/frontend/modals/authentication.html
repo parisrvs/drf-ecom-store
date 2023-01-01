@@ -1,0 +1,102 @@
+<!-- Button trigger modal -->
+
+<div class="d-none">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" id="loginModalBtn">
+        Login
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal" id="registerModalBtn">
+        Register
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerSuccessModal" id="registerSuccessModalBtn">
+        Register
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recoverModal" id="recoverModalBtn">
+        Recover
+    </button>
+</div>
+
+  <!-- Modal -->
+<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModalLabel">Login</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loginModalBody"></div>
+            <div class="modal-footer">
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                    <button type="submit" form="loginForm" class="btn btn-outline-white ">Login</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="displayRegisterModal(); return false;">Register</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="displayRecoverModal(); return false;">Recover</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- register modal -->
+<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-center modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="registerModalLabel">Register</h1>
+                <button type="button" class="btn-close disable" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="registerModalBody"></div>
+            <div class="modal-footer">
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                    <button type="submit" form="registerForm" class="btn btn-outline-white disable">
+                        Register
+                        <div class="spinner-border spinner-border-sm" hidden role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark disable" onclick="displayLoginModal(); return false;">Login</button>
+                    <button type="button" class="btn btn-outline-dark disable" onclick="displayRecoverModal(); return false;">Recover</button>
+                    <button type="button" class="btn btn-outline-dark disable" data-bs-dismiss="modal" id="registerModalCloseBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- register success modal -->
+<div class="modal fade" id="registerSuccessModal" tabindex="-1" aria-labelledby="registerSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="registerSuccessModalLabel">Success!!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="registerSuccessModalBody">
+                You have successfully registered your account with us.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark w-25" onclick="displayLoginModal(); return false;">Login</button>
+                <button type="button" class="btn btn-outline-dark w-25" data-bs-dismiss="modal" id="registerSuccessModalCloseBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="recoverModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="recoverModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="recoverModalLabel">Recover</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="recoverModalBody"></div>
+            <div class="modal-footer">
+                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                    <button type="submit" form="recoverForm" class="btn btn-outline-white ">Recover</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="displayLoginModal(); return false;">Login</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="displayRegisterModal(); return false;">Register</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
